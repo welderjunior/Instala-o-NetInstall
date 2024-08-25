@@ -1,0 +1,17 @@
+Corrigir erros comuns
+
+1 - Abrir netinstall como administrador
+2 - Desabilitar firewall e antivirus
+3 - Apenas uma interface de rede ativa
+4 - Não colocar gateway na configuração de rede do PC
+5 - Alterar configuraçãode rede antes de executar o netinstall
+
+
+Realizar a intalação pelo netinstall
+
+1 - Baixar o main package correspondente da RB;
+2 - Configure IP estatico no pc; GATEWAY, PC E RB
+	Ex: PC: 10.20.20.2, GATEWAY: 10.20.20.1, RB:10.20.20.3
+3 - Configurar o IP da RB em Net booting;
+4 - Escolha o aequivo Main package;
+5 - Ligar a RB e segurar o botão reset por 15 segundos; OBS: ether1 ou ultima interface.
