@@ -1,0 +1,16 @@
+:g email "seu_email_aqui"
+:g senha "sua_senha_aqui"
+/tool e-mail
+set address=smtp-mail.outlook.com from=$email port=587 tls=starttls user=$email
+password=$senha
+/system scheduler
+add disabled=no interval=1m name=BACKUP-VIA-EMAIL on-event=":g RouterName [/sy\
+stem identity get name]\r\
+\n\r\
+\n/export file=\"\$RouterName\"\r\
+\n\r\
+\n:delay 10\r\
+\n\r\
+\n/tool/e-mail/send to=\$email file=\$RouterName subject=\"BACKUP \$RouterN\
+ame\"" \
+start-date=nov/30/2022 start-time=02:10:00

@@ -1,0 +1,17 @@
+/system scheduler
+add interval=1d name=BACKUP-VIA-FTP on-event=":g server \"10.10.254.1\"\t\t\r\
+\n:g user \"usuario-ftp\"\r\
+\n:g pass \"senha-ftp\"\r\
+\n:g port \"21\"\r\
+\n\r\
+\n\r\
+\n:g RouterName [/system identity get name]\r\
+\n\r\
+\n/export file=\"\$RouterName\"\r\
+\n:delay 2\r\
+\n/tool fetch upload=yes mode=ftp address=\$server user=\$user
+password=\$p\
+ass src-path=(\"/\$RouterName\".\".rsc\") dst-path=(\"/\$RouterName\".\".rs\
+c\") port=\$port\r\
+\n" \
+start-date=nov/30/2022 start-time=14:16:41
