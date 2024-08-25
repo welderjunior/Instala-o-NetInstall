@@ -25,14 +25,14 @@ add action=add-src-to-address-list address-list=PORTSCAN address-list-timeout=7d
     chain=input comment="DETECTA PORTSCARN" dst-port=20-25,3389,8291 protocol=tcp
 add action=add-src-to-address-list address-list=PORT-KNOCKING-1 \
     address-list-timeout=3s chain=input comment="1 ETAPA PORT KNOCKING" \
-    disabled=yes dst-port=15056 protocol=tcp
+    dst-port=15056 protocol=tcp
 add action=add-src-to-address-list address-list=PORT-KNOCKING-2 \
     address-list-timeout=3s chain=input comment="2 ETAPA PORT KNOCKING" \
-    disabled=yes dst-port=8023 protocol=tcp \
+    dst-port=8023 protocol=tcp \
     src-address-list=PORT-KNOCKING-1
 add action=add-src-to-address-list address-list=REDE-SUPORTE \
     address-list-timeout=3h chain=input comment="ETAPA FINAL PORT KNOCKING" \
-    disabled=yes dst-port=34752 protocol=tcp \
+    dst-port=34752 protocol=tcp \
     src-address-list=PORT-KNOCKING-2
 add action=accept chain=input comment="ACEITA OSP" \
     protocol=ospf disabled=yes
