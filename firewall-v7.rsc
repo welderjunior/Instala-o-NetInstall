@@ -11,8 +11,10 @@ add action=accept chain=input comment="ACEITA REDE DE SUPORTE" \
 add action=accept chain=input comment="ACEITA DNS" dst-port=53 protocol=tcp
 add action=accept chain=input comment="ACEITA DNS" dst-port=53 protocol=udp
 add action=add-src-to-address-list address-list=PORTSCAN \
-    address-list-timeout=1w chain=input comment=PORTSCAN dst-address-type="" \
+    address-list-timeout=7d chain=input comment=PORTSCAN dst-address-type="" \
     psd=21,3s,3,1
+add action=add-src-to-address-list address-list=PORTSCAN address-list-timeout=7d \
+    chain=input comment="DETECTA PORTSCARN" dst-port=20-25,3389,8291 protocol=tcp
 add action=add-src-to-address-list address-list=PORT-KNOCKING-1 \
     address-list-timeout=3s chain=input comment="1 ETAPA PORT KNOCKING" \
     disabled=yes dst-port=15056 in-interface-list=links protocol=tcp
