@@ -1,8 +1,9 @@
 # OBS: 
 # 1 - A regra de drop geral já vem desabilitada no script por padrão. Para não perde acesso ao Mikrotik, antes de
 # habilitar a regra, adicione os prefixos na lista REDE-SUPORTE que terão acesso ao disposito;
-# 2 - Caso utilize OSPF, ative a regra para aceitar conexões OSPF;
-# 3 - Para evitar problemas em subir o OSPF em roteadores que façam o CGNAT, habilite a regra com o comentário "OSPF FORA DO NAT" na tabela raw.
+# 2 - Se tiver habilitado o DROP GERAL antes de colocar os prefixos permitidos, faça um Toc Toc(Port Knocking) nas portas: 15056, 8023 e 34752;
+# 3 - Caso utilize OSPF ative a regra para aceitar conexões OSPF;
+# 4 - Para evitar problemas em subir o OSPF em roteadores que façam o CGNAT, habilite a regra com o comentário "OSPF FORA DO NAT" na tabela raw.
 
 
 /ip firewall filter
@@ -24,14 +25,14 @@ add action=add-src-to-address-list address-list=PORTSCAN address-list-timeout=7d
     chain=input comment="DETECTA PORTSCARN" dst-port=20-25,3389,8291 protocol=tcp
 add action=add-src-to-address-list address-list=PORT-KNOCKING-1 \
     address-list-timeout=3s chain=input comment="1 ETAPA PORT KNOCKING" \
-    disabled=yes dst-port=15056 in-interface-list=links protocol=tcp
+    disabled=yes dst-port=15056 protocol=tcp
 add action=add-src-to-address-list address-list=PORT-KNOCKING-2 \
     address-list-timeout=3s chain=input comment="2 ETAPA PORT KNOCKING" \
-    disabled=yes dst-port=8023 in-interface-list=links protocol=tcp \
+    disabled=yes dst-port=8023 protocol=tcp \
     src-address-list=PORT-KNOCKING-1
 add action=add-src-to-address-list address-list=REDE-SUPORTE \
     address-list-timeout=3h chain=input comment="ETAPA FINAL PORT KNOCKING" \
-    disabled=yes dst-port=34752 in-interface-list=links protocol=tcp \
+    disabled=yes dst-port=34752 protocol=tcp \
     src-address-list=PORT-KNOCKING-2
 add action=accept chain=input comment="ACEITA OSP" \
     protocol=ospf disabled=yes
