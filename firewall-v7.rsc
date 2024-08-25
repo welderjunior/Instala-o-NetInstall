@@ -1,3 +1,10 @@
+# OBS: 
+# 1 - A regra de drop geral já vem desabilitada no script por padrão. Para não perde acesso ao Mikrotik, antes de
+# habilitar a regra, adicione os prefixos na lista REDE-SUPORTE que terão acesso ao disposito;
+# 2 - Caso utilize OSPF, ative a regra para aceitar conexões OSPF;
+# 3 - Para evitar problemas em subir o OSPF em roteadores que façam o CGNAT, habilite a regra com o comentário "OSPF FORA DO NAT" na tabela raw.
+
+
 /ip firewall filter
 add action=accept chain=input comment=\
     "ACEITA NO MAXIMO 50 PACOTES DE ICMP POR SEGUNDO" dst-address-type="" \
@@ -27,9 +34,9 @@ add action=add-src-to-address-list address-list=REDE-SUPORTE \
     disabled=yes dst-port=34752 in-interface-list=links protocol=tcp \
     src-address-list=PORT-KNOCKING-2
 add action=accept chain=input comment="ACEITA OSP" \
-    protocol=ospf
+    protocol=ospf disabled=yes
 add action=drop chain=input comment="DROP GERAL" disabled=yes
 /ip firewall raw
 add action=drop chain=prerouting comment="DROPA PORTSCAN" src-address-list=\
     PORTSCAN
-add action=notrack chain=output comment="OSPF FORA DO NAT" protocol=ospf
+add action=notrack chain=output comment="OSPF FORA DO NAT" protocol=ospf disabled=yes
